@@ -1,0 +1,98 @@
+package practice.main;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+/**
+ */
+public class SerializeDeserialize implements Serializable {
+
+    private String name = "test";
+    private Integer testVal = 1;
+
+
+    public static void main(String... args){
+
+        SerializeDeserialize test = new SerializeDeserialize();
+        try {
+            serialize(test);
+        }catch(IOException e){
+            System.err.println("Unable to write object to file");
+        }
+
+        try{
+            SerializeDeserialize result = (SerializeDeserialize)deserialize();
+            System.out.println("Result from file => Name: "+result.getName());
+            System.out.println("Result from file => TestVal: "+result.getTestVal());
+
+        }catch(IOException e){
+            System.err.println("Unable to read object from file");
+        }catch(ClassNotFoundException e){
+            System.err.println("Unable to load object from file");
+        }
+
+
+
+
+    }
+
+    private static <T> void serialize(T object) throws IOException{
+
+        File dataFile = new File(System.getProperty("user.home"),"\\.cdm");
+
+        if(!dataFile.exists()){
+            dataFile.mkdirs();
+            dataFile.setWritable(true);
+            dataFile.setReadable(true);
+        }
+
+        dataFile = new File(dataFile,"data.cdm");
+        dataFile.createNewFile();
+
+        System.out.println(dataFile.getAbsolutePath());
+
+        try(ObjectOutputStream out = new ObjectOutputStream(
+            new BufferedOutputStream(new FileOutputStream(dataFile))
+        )){
+            out.writeObject(object);
+        }
+    }
+
+    private static SerializeDeserialize deserialize() throws IOException, ClassNotFoundException{
+
+        SerializeDeserialize test = null;
+        File dataFile = new File(System.getProperty("user.home"),"\\.cdm\\data.cdm");
+
+        try(ObjectInputStream in = new ObjectInputStream(
+                new BufferedInputStream(new FileInputStream(dataFile))
+        )){
+
+           Object object = in.readObject();
+
+            if(object instanceof SerializeDeserialize){
+                test = (SerializeDeserialize)object;
+            }
+        }
+
+        return test;
+    }
+
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getTestVal() {
+        return testVal;
+    }
+
+    public void setTestVal(Integer testVal) {
+        this.testVal = testVal;
+    }
+}
