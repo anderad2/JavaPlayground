@@ -59,23 +59,25 @@ public class SerializeDeserialize implements Serializable {
         }
     }
 
-    private static SerializeDeserialize deserialize() throws IOException, ClassNotFoundException{
+    private static Object deserialize(){
 
-        SerializeDeserialize test = null;
-        File dataFile = new File(System.getProperty("user.home"),"\\.cdm\\data.cdm");
+        Object result = null;
+        File dataFile = new File(System.getProperty("user.home"),File.separator+".cdm"+File.separator+"data.cdm");
 
         try(ObjectInputStream in = new ObjectInputStream(
                 new BufferedInputStream(new FileInputStream(dataFile))
         )){
 
-           Object object = in.readObject();
-
-            if(object instanceof SerializeDeserialize){
-                test = (SerializeDeserialize)object;
-            }
+            result = in.readObject();
+            
+            /*if(object instanceof DashboardForm){
+            	result = (DashboardForm)object;
+            }*/
+        }catch(IOException | ClassNotFoundException  e){
+            e.printStackTrace();
         }
 
-        return test;
+        return result;
     }
 
 
