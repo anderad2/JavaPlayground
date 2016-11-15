@@ -37,15 +37,41 @@ public class MergeSort {
 
     private static int[] merge(int[] arrayInput, int startingIndex, int midPoint, int endingIndex){
 
-        int[] leftArray = new int[ midPoint - startingIndex+1 ];
-        int[] rightArray = new int[ endingIndex - midPoint ];
+        int[] temp = new int[endingIndex - startingIndex + 1];
+        int leftSlot = startingIndex;
+        int rightSlot = midPoint + 1;
+        int k = 0;
 
-        for(int i = startingIndex; i < midPoint; i++){
-            leftArray[i] = arrayInput[i];
+        while(leftSlot <= midPoint && rightSlot <= endingIndex){
+
+            if(arrayInput[leftSlot]<arrayInput[rightSlot]){
+                temp[k] = arrayInput[leftSlot];
+                leftSlot++;
+            }else{
+                temp[k] = arrayInput[rightSlot];
+                rightSlot++;
+            }
+
+            k++;
         }
 
-        for(int i = 0,j=midPoint+1; j<endingIndex && i<rightArray.length; i++, j++){
-            rightArray[i] = arrayInput[j];
+        if(leftSlot <= midPoint){
+            while(leftSlot <= midPoint){
+                temp[k] = arrayInput[leftSlot];
+                leftSlot++;
+                k++;
+            }
+        }else if(rightSlot <= endingIndex) {
+            while (rightSlot <= endingIndex) {
+                temp[k] = arrayInput[rightSlot];
+                rightSlot++;
+                k++;
+            }
+        }
+
+        //copy temp to arrayInput
+        for(int i=0; i< temp.length; i++){
+            arrayInput[startingIndex + i] = temp[i];
         }
 
 
@@ -54,5 +80,7 @@ public class MergeSort {
 
 
     }
+    
+    //// TODO: 11/14/16 Try Merge inPLace with a single array; no temp
 
 }
