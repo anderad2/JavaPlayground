@@ -17,7 +17,7 @@ public class Factoral {
         int result = 1;
 
         for(int i = val; i>0; i--){
-            System.out.println(""+result+"*"+i);
+            //System.out.println(""+result+"*"+i);
             result = result * i;
 
         }
@@ -32,7 +32,7 @@ public class Factoral {
             return result;
         }
 
-        System.out.println(""+result+"*"+val);
+        //System.out.println(""+result+"*"+val);
         result = result * val--;
 
         return  calculateRecursively(val,result);}
