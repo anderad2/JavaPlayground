@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>JavaScript Weird Parts Practice</title>
   </head>
   <body>
-  $END$
+    <p>Just gettin' my PRACTICE on!!!</p>
   </body>
 </html>
+
+<script src="practice.js"></script>
