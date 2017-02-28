@@ -1,0 +1,38 @@
+Configuring Character Encoding via Spring
+
+//Web.xml - added before all other filters
+<!-- Necessary for Chinese Characters -->
+		<filter>
+		    <filter-name>characterEncodingFilter</filter-name>
+		    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		    <init-param>
+		        <param-name>encoding</param-name>
+		        <param-value>UTF-8</param-value>
+		    </init-param>
+		</filter>
+		<filter-mapping>
+	        <filter-name>characterEncodingFilter</filter-name>
+	        <url-pattern>/*</url-pattern>
+	    </filter-mapping>
+      
+------------------------------------------------------------------------------------------------------      
+//applicationContext-dao.xml - for Hibernate
+<bean id="pooledDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<property name="driverClassName">
+					<value>oracle.jdbc.OracleDriver</value>
+				</property>
+				<property name="url">
+					<value>jdbc:oracle:thin:@****ora.corp.cat.com:1521:****</value>
+				</property>
+				<property name="username">
+					<value>dataSourceSchemaName</value>
+				</property>
+				<property name="password">
+					<value>*********</value>
+				</property>
+				<property name="charSet" value="UTF-8"/><!-- Necessary for Chinese Characters -->			
+</bean>
+
+
+//Added to each JSP or only the JSP template
+<%@ page pageEncoding="UTF-8" %>
